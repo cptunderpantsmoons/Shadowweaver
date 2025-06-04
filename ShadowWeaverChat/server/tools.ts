@@ -42,7 +42,7 @@ export async function setupTools() {
         }
         
         console.log(`Tool ${tool} is installed`);
-      } catch (error) {
+      } catch (error: any) {
         console.log(`Tool ${tool} is not installed`);
         
         // Update tool status in database
@@ -63,12 +63,12 @@ export async function setupTools() {
     try {
       await execPromise('systemctl is-active tor');
       console.log('Tor service is active');
-    } catch (error) {
+    } catch (error: any) {
       console.log('Tor service is not active');
     }
     
     isInitialized = true;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error initializing tools:', error);
   }
 }
@@ -175,7 +175,7 @@ msf6 > ${command}
 [*] Command executed
 [*] For full Metasploit functionality, please use the dedicated Metasploit console.
 `;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error with Metasploit command:', error);
     return `Error with Metasploit command: ${error.message}`;
   }
@@ -229,7 +229,7 @@ async function saveTargetInfo(ip: string, scanOutput: string): Promise<void> {
         last_scanned: new Date()
       });
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error saving target info:', error);
   }
 }
@@ -297,7 +297,7 @@ msf6 > ${command}
 
 // Generate a custom exploit
 export async function generateExploit(target: string, exploitType: string, service: string, port: number): Promise<string> {
-  // In a real implementation, this would use Claude to generate an actual exploit
+  // In a real implementation, this would use DeepSeek to generate an actual exploit
   // For now, we'll return a template exploit
   
   const exploitTemplate = `
@@ -386,7 +386,7 @@ export async function executeExploitInSandbox(target: string, code: string): Pro
 [+] Exploitation successful!
 [+] Results have been saved to the database
 `;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error executing exploit in sandbox:', error);
     return `Error executing exploit: ${error.message}`;
   }

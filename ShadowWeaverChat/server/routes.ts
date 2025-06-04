@@ -2,15 +2,15 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupWebSockets } from "./websocket";
-import { initClaude } from "./claude";
+import { initDeepSeek } from "./deepseek";
 import { setupTools } from "./tools";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Create HTTP server
   const httpServer = createServer(app);
 
-  // Initialize Claude API
-  initClaude();
+  // Initialize DeepSeek API
+  initDeepSeek();
 
   // Initialize security tools
   setupTools();

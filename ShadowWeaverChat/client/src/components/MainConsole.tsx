@@ -162,7 +162,7 @@ const MainConsole: React.FC<MainConsoleProps> = ({
                   [SYSTEM] Weaver of Shadows v1.7.3 initialized...
                 </div>
                 <div className="text-gray-500">
-                  [SYSTEM] Connected to Claude API. TOR proxy active.
+                  [SYSTEM] Connected to DeepSeek API. TOR proxy active.
                 </div>
                 <div className="text-gray-500">
                   [SYSTEM] MCP server ready. 10 tools available.

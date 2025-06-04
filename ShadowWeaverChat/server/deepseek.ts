@@ -1,9 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk';
+// DeepSeek API key will be loaded during initialization
+let deepseekApiKey: string;
 
-// the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
-let anthropic: Anthropic;
-
-// The prompt that guides Claude's behavior and responses
+// The prompt that guides the language model's behavior and responses
 const SYSTEM_PROMPT = `
 You are a penetration testing mastermind for elite cybersecurity professionals, operating on authorized targets. Given a user-specified target, autonomously select the optimal Kali Linux tools (nmap, sqlmap, metasploit, hydra, aircrack-ng, burpsuite, owasp-zap, john, nikto, hashcat) and craft precise command parameters to execute tasks.
 
@@ -38,33 +36,43 @@ Chain vulnerabilities (e.g., XSS to RCE) for maximum impact, suggesting multi-st
 Output as valid JSON only. No explanations outside the JSON format.
 `;
 
-// Initialize Claude client
-export function initClaude() {
-  const apiKey = process.env.ANTHROPIC_API_KEY || 'dummy_key';
-  anthropic = new Anthropic({ apiKey });
+// Initialize DeepSeek client by storing the API key
+export function initDeepSeek() {
+  deepseekApiKey = process.env.DEEPSEEK_API_KEY || 'dummy_key';
 }
 
-// Process user messages with Claude
+// Process user messages with the DeepSeek API
 export async function processChatMessage(userMessage: string) {
   try {
-    // Call Claude API
-    const response = await anthropic.messages.create({
-      model: 'claude-3-7-sonnet-20250219',
-      system: SYSTEM_PROMPT,
-      max_tokens: 1500,
-      messages: [{ role: 'user', content: userMessage }]
+    const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${deepseekApiKey}`
+      },
+      body: JSON.stringify({
+        model: 'deepseek-chat',
+        messages: [
+          { role: 'system', content: SYSTEM_PROMPT },
+          { role: 'user', content: userMessage }
+        ],
+        max_tokens: 1500
+      })
     });
+
+    const data = await response.json();
+    const text = data.choices?.[0]?.message?.content || '';
     
     let result;
-    
+
     try {
       // Parse JSON response
-      result = JSON.parse(response.content[0].text);
+      result = JSON.parse(text);
     } catch (parseError) {
-      console.error('Error parsing Claude response as JSON:', parseError);
+      console.error('Error parsing DeepSeek response as JSON:', parseError);
       // Fallback for non-JSON responses
       result = {
-        aiResponse: response.content[0].text,
+        aiResponse: text,
         commands: [],
         analysis: '',
         attackChain: []
@@ -74,7 +82,7 @@ export async function processChatMessage(userMessage: string) {
     return result;
     
   } catch (error) {
-    console.error('Error calling Claude API:', error);
+    console.error('Error calling DeepSeek API:', error);
     return {
       aiResponse: "I'm having trouble connecting to the AI service. Please try again later.",
       commands: [],
