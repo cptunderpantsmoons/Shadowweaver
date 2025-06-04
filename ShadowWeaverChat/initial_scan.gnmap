@@ -1,0 +1,2 @@
+# Nmap 7.94 scan initiated Sat May 17 13:41:25 2025 as: nmap -sV -sC -p- --min-rate 1000 -oA initial_scan
+# Nmap done at Sat May 17 13:41:27 2025 -- 0 IP addresses (0 hosts up) scanned in 1.57 seconds

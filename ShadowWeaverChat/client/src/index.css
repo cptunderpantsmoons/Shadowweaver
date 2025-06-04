@@ -1,0 +1,234 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 195 100% 50%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 5% 10%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    
+    --cyber-black: 240 15% 4%;
+    --cyber-dark: 240 10% 8%;
+    --cyber-panel: 240 10% 10%;
+    
+    --cyber-blue: 195 100% 50%;
+    --cyber-blue-dim: 210 100% 50%;
+    --cyber-red: 342 100% 50%;
+    --cyber-red-dim: 342 100% 60%;
+    --cyber-green: 150 100% 50%;
+    --cyber-purple: 270 100% 60%;
+    --cyber-yellow: 48 100% 50%;
+    
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    @apply bg-cyber-black text-foreground;
+  }
+  
+  .font-rajdhani {
+    font-family: 'Rajdhani', sans-serif;
+  }
+  
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .neon-border {
+    @apply relative;
+  }
+  
+  .neon-border::after {
+    content: '';
+    @apply absolute -inset-px rounded-[inherit] border border-cyber-blue opacity-70 pointer-events-none;
+    box-shadow: 0 0 5px theme('colors.cyber.blue'), 0 0 10px theme('colors.cyber.blue');
+  }
+  
+  .neon-border-red::after {
+    @apply border-cyber-red;
+    box-shadow: 0 0 5px theme('colors.cyber.red'), 0 0 10px theme('colors.cyber.red');
+  }
+  
+  .neon-border-green::after {
+    @apply border-cyber-green;
+    box-shadow: 0 0 5px theme('colors.cyber.green'), 0 0 10px theme('colors.cyber.green');
+  }
+  
+  .neon-glow {
+    text-shadow: 0 0 5px theme('colors.cyber.blue'), 0 0 10px theme('colors.cyber.blue');
+  }
+  
+  .neon-glow-red {
+    text-shadow: 0 0 5px theme('colors.cyber.red'), 0 0 10px theme('colors.cyber.red');
+  }
+  
+  .neon-glow-green {
+    text-shadow: 0 0 5px theme('colors.cyber.green'), 0 0 10px theme('colors.cyber.green');
+  }
+  
+  .terminal-scan {
+    background: linear-gradient(180deg, rgba(0, 255, 255, 0.1) 0%, rgba(0, 255, 255, 0) 100%);
+    background-size: 100% 20px;
+    animation: scan 2s linear infinite;
+  }
+  
+  .cursor-blink::after {
+    content: '|';
+    animation: blink 1s infinite;
+    @apply text-cyber-blue;
+  }
+}
+
+@layer utilities {
+  .bg-cyber-black {
+    @apply bg-[#0A0A0F];
+  }
+  
+  .bg-cyber-dark {
+    @apply bg-[#121218];
+  }
+  
+  .bg-cyber-panel {
+    @apply bg-[#16161D];
+  }
+  
+  .text-cyber-blue {
+    @apply text-[#00FFFF];
+  }
+  
+  .text-cyber-blue-dim {
+    @apply text-[#0088FF];
+  }
+  
+  .text-cyber-red {
+    @apply text-[#FF0044];
+  }
+  
+  .text-cyber-red-dim {
+    @apply text-[#FF3366];
+  }
+  
+  .text-cyber-green {
+    @apply text-[#00FF66];
+  }
+  
+  .text-cyber-purple {
+    @apply text-[#9933FF];
+  }
+  
+  .text-cyber-yellow {
+    @apply text-[#FFCC00];
+  }
+  
+  .border-cyber-blue {
+    @apply border-[#00FFFF];
+  }
+  
+  .border-cyber-red {
+    @apply border-[#FF0044];
+  }
+  
+  .border-cyber-green {
+    @apply border-[#00FF66];
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px theme('colors.cyber.blue'), 0 0 10px theme('colors.cyber.blue'), 0 0 15px theme('colors.cyber.blue');
+    text-shadow: 0 0 5px theme('colors.cyber.blue'), 0 0 10px theme('colors.cyber.blue');
+  }
+  50% {
+    box-shadow: 0 0 10px theme('colors.cyber.blue'), 0 0 20px theme('colors.cyber.blue'), 0 0 30px theme('colors.cyber.blue');
+    text-shadow: 0 0 10px theme('colors.cyber.blue'), 0 0 20px theme('colors.cyber.blue');
+  }
+}
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes scan {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-opacity-60 bg-[#1A1A24];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-opacity-50 bg-[#0088FF] rounded;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-opacity-70 bg-[#00FFFF];
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+.animate-flicker {
+  animation: flicker 3s linear infinite;
+}
+
+.animate-scan {
+  animation: scan 2s linear infinite;
+}
