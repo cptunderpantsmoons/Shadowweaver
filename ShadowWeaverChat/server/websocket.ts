@@ -1,6 +1,6 @@
 import { WebSocketServer, WebSocket } from 'ws';
 import { Server as HttpServer } from 'http';
-import { processChatMessage } from './claude';
+import { processChatMessage } from './deepseek';
 import { storage } from './storage';
 import { executeCommand, generateExploit, executeExploitInSandbox } from './tools';
 
@@ -47,7 +47,7 @@ export function setupWebSockets(server: HttpServer) {
     ws.send(JSON.stringify({
       type: 'message',
       messageType: MessageType.SYSTEM,
-      content: 'Connected to Claude API. TOR proxy active.'
+      content: 'Connected to DeepSeek API. TOR proxy active.'
     }));
 
     ws.send(JSON.stringify({
@@ -174,7 +174,7 @@ async function handleUserMessage(ws: WebSocket, message: string) {
       attack_plan: {}
     });
     
-    // Process with Claude
+    // Process with DeepSeek
     isExecuting = true;
     updateActiveToolStatus(ws);
     
